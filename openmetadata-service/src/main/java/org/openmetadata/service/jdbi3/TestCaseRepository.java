@@ -54,17 +54,21 @@ public class TestCaseRepository extends EntityRepository<TestCase> {
   }
 
   @Override
-  public void prepare(TestCase test) throws IOException {
+  public void setFullyQualifiedName(TestCase test) {
     MessageParser.EntityLink entityLink = MessageParser.EntityLink.parse(test.getEntityLink());
     EntityUtil.validateEntityLink(entityLink);
+    test.setFullyQualifiedName(FullyQualifiedName.add(entityLink.getFullyQualifiedFieldValue(), test.getName()));
+    test.setEntityFQN(entityLink.getFullyQualifiedFieldValue());
+  }
+
+  @Override
+  public void prepare(TestCase test) throws IOException {
     // validate test definition and test suite
     Entity.getEntityReferenceById(Entity.TEST_DEFINITION, test.getTestDefinition().getId(), Include.NON_DELETED);
     Entity.getEntityReferenceById(Entity.TEST_SUITE, test.getTestSuite().getId(), Include.NON_DELETED);
     TestDefinition testDefinition =
         Entity.getEntity(test.getTestDefinition(), EntityUtil.Fields.EMPTY_FIELDS, Include.NON_DELETED);
     validateTestParameters(test.getParameterValues(), testDefinition.getParameterDefinition());
-    test.setFullyQualifiedName(FullyQualifiedName.add(entityLink.getFullyQualifiedFieldValue(), test.getName()));
-    test.setEntityFQN(entityLink.getFullyQualifiedFieldValue());
   }
 
   private EntityReference getTestSuite(TestCase test) throws IOException {

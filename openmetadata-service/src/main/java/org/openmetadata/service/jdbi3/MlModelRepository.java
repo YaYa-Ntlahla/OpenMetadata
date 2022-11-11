@@ -128,7 +128,6 @@ public class MlModelRepository extends EntityRepository<MlModel> {
   @Override
   public void prepare(MlModel mlModel) throws IOException {
     populateService(mlModel);
-    setFullyQualifiedName(mlModel);
     if (!nullOrEmpty(mlModel.getMlFeatures())) {
       validateReferences(mlModel.getMlFeatures());
       setMlFeatureFQN(mlModel.getFullyQualifiedName(), mlModel.getMlFeatures());
@@ -138,8 +137,6 @@ public class MlModelRepository extends EntityRepository<MlModel> {
     if (mlModel.getDashboard() != null) {
       daoCollection.dashboardDAO().findEntityReferenceById(mlModel.getDashboard().getId());
     }
-
-    mlModel.setTags(addDerivedTags(mlModel.getTags()));
   }
 
   @Override

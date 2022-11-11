@@ -56,7 +56,6 @@ public class DatabaseSchemaRepository extends EntityRepository<DatabaseSchema> {
   @Override
   public void prepare(DatabaseSchema schema) throws IOException {
     populateDatabase(schema);
-    setFullyQualifiedName(schema);
   }
 
   @Override
