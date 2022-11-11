@@ -64,9 +64,9 @@ def get_table_metrics(
                 elif isinstance(metric, Metrics.COLUMN_NAMES):
                     pass
                 else:
-                    row.append[metric().dl_fn(row_metric_df)]
+                    row.append(metric().dl_fn(row_metric_df))
             else:
-                    row.append[metric().dl_fn(data_frame)]
+                    row.append(metric().dl_fn(data_frame))
 
            
         if row:
@@ -109,12 +109,11 @@ def get_static_metrics(
                 if isinstance(data_frame,TextFileReader):
                     for chunk in data_frame:
                         row_metric_df.loc[len(row_metric_df.index)] = [
-                            metric().dl_fn(chunk) for metric in metrics
+                            metric().dl_fn(chunk.fillna(0)) for metric in metrics
                         ]
-                    row.append[metric().dl_fn(row_metric_df)]
+                    row.append(metric().dl_fn(row_metric_df.fillna(0)))
                 else:
-                    row.append(metric(column).dl_fn(data_frame))
-
+                    row.append(metric(column).dl_fn(data_frame.fillna(0)))
             else:
                 row.append(None)
             

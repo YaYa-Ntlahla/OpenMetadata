@@ -13,7 +13,7 @@ Helper module to handle data sampling
 for the profiler
 """
 from typing import Dict, Optional, Union
-
+from pandas import DataFrame
 from sqlalchemy import column, inspect, text
 from sqlalchemy.orm import DeclarativeMeta, Query, Session, aliased
 from sqlalchemy.orm.util import AliasedClass
@@ -99,7 +99,8 @@ class Sampler:
         table_columns = DatalakeSource.get_columns(data_frame=data_frame)
         for col in table_columns:
             cols.append(col.name.__root__)
-        self._sample_rows = data_frame.dropna().values.tolist()
+        self._sample_rows = data_frame.fillna(0).values.tolist() if isinstance(data_frame, DataFrame) else data_frame.values.tolist()
+        return cols, self._sample_rows
 
     def fetch_sqa_sample_data(self) -> TableData:
         """
@@ -138,8 +139,7 @@ class Sampler:
                 key=self.table.name.__root__,
                 bucket_name=self.table.databaseSchema.name,
             )
-        cols, rows = self.get_col_row()
-
+        cols, rows = self.get_col_row(data_frame)
         return TableData(columns=cols, rows=rows), data_frame
 
     def _fetch_sample_data_from_user_query(self) -> TableData:
