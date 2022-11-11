@@ -60,9 +60,12 @@ class MaxLength(StaticMetric):
                 pd.DataFrame(
                     [
                         len(concatenable_data)
-                        if concatenable_data and not isinstance(concatenable_data, float)
+                        if concatenable_data
+                        and not isinstance(concatenable_data, float)
                         else concatenable_data
-                        for concatenable_data in data_frame[self.col.name.__root__].dropna()
+                        for concatenable_data in data_frame[
+                            self.col.name.__root__
+                        ].dropna()
                     ]
                 )
                 .max()

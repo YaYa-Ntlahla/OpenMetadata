@@ -17,13 +17,12 @@ supporting sqlalchemy abstraction layer
 from abc import ABC, abstractmethod
 from typing import Any, Dict, Optional, Union
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 from sqlalchemy import Column, MetaData
 
-from metadata.generated.schema.entity.data.table import Table
+from metadata.generated.schema.entity.data.table import PartitionProfilerConfig, Table
 from metadata.generated.schema.entity.services.connections.database.datalakeConnection import (
     DatalakeConnection,
-    DatalakeType,
 )
 from metadata.generated.schema.entity.services.databaseService import DatabaseConnection
 from metadata.ingestion.ometa.ometa_api import OpenMetadata
