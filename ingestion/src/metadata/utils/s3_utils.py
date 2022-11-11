@@ -24,24 +24,29 @@ from pyarrow.parquet import ParquetFile
 
 
 def read_csv_from_s3(
-    client: Any, key: str, bucket_name: str, sep: str = ",", sample_size: int = 100
+    client: Any,
+    key: str,
+    bucket_name: str,
+    sep: str = ",",
 ) -> DataFrame:
     """
     Read the csv file from the s3 bucket and return a dataframe
     """
 
     stream = client.get_object(Bucket=bucket_name, Key=key)["Body"]
-    return pd.read_csv(stream, sep=sep, nrows=sample_size + 1)
+    return pd.read_csv(stream, sep=sep, chunksize=200000)
 
 
 def read_tsv_from_s3(
-    client, key: str, bucket_name: str, sample_size: int = 100
+    client,
+    key: str,
+    bucket_name: str,
 ) -> DataFrame:
     """
     Read the tsv file from the s3 bucket and return a dataframe
     """
 
-    return read_csv_from_s3(client, key, bucket_name, sep="\t", sample_size=sample_size)
+    return read_csv_from_s3(client, key, bucket_name, sep="\t")
 
 
 def read_json_from_s3(

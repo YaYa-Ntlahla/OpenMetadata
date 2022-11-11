@@ -29,7 +29,6 @@ from metadata.generated.schema.entity.data.table import (
     ColumnName,
     ColumnProfile,
     ColumnProfilerConfig,
-    TableData,
     TableProfile,
 )
 from metadata.interfaces.profiler_protocol import ProfilerProtocol

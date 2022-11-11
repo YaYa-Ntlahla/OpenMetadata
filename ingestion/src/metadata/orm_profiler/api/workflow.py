@@ -21,7 +21,7 @@ from copy import deepcopy
 from functools import singledispatch
 from typing import Iterable, List, Optional, cast
 
-from pydantic import BaseModel, ValidationError
+from pydantic import ValidationError
 from sqlalchemy import MetaData
 
 from metadata.config.common import WorkflowExecutionError
@@ -34,7 +34,6 @@ from metadata.generated.schema.entity.data.table import (
 )
 from metadata.generated.schema.entity.services.connections.database.datalakeConnection import (
     DatalakeConnection,
-    DatalakeType,
 )
 from metadata.generated.schema.entity.services.connections.metadata.openMetadataConnection import (
     OpenMetadataConnection,

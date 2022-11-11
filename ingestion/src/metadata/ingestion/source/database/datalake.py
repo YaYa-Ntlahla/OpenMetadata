@@ -326,16 +326,16 @@ class DatalakeSource(DatabaseServiceSource):
             self.status.failures.append(f"{self.config.serviceName}.{table_name}")
 
     @staticmethod
-    def get_gcs_files(client, key, bucket_name, sample_size: int = None):
+    def get_gcs_files(client, key, bucket_name):
         try:
             if key.endswith(".csv"):
-                return read_csv_from_gcs(key, bucket_name, sample_size)
+                return read_csv_from_gcs(key, bucket_name)
 
             if key.endswith(".tsv"):
-                return read_tsv_from_gcs(key, bucket_name, sample_size)
+                return read_tsv_from_gcs(key, bucket_name)
 
             if key.endswith(".json"):
-                return read_json_from_gcs(client, key, bucket_name, sample_size)
+                return read_json_from_gcs(client, key, bucket_name)
 
             if key.endswith(".parquet"):
                 return read_parquet_from_gcs(key, bucket_name)
@@ -348,16 +348,16 @@ class DatalakeSource(DatabaseServiceSource):
         return None
 
     @staticmethod
-    def get_s3_files(client, key, bucket_name , sample_size: int = None):
+    def get_s3_files(client, key, bucket_name):
         try:
             if key.endswith(".csv"):
-                return read_csv_from_s3(client, key, bucket_name, sample_size)
+                return read_csv_from_s3(client, key, bucket_name)
 
             if key.endswith(".tsv"):
-                return read_tsv_from_s3(client, key, bucket_name, sample_size)
+                return read_tsv_from_s3(client, key, bucket_name)
 
             if key.endswith(".json"):
-                return read_json_from_s3(client, key, bucket_name, sample_size)
+                return read_json_from_s3(client, key, bucket_name)
 
             if key.endswith(".parquet"):
                 return read_parquet_from_s3(client, key, bucket_name)

@@ -17,17 +17,15 @@ supporting sqlalchemy abstraction layer
 from abc import ABC, abstractmethod
 from typing import Any, Dict, Optional, Union
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 from sqlalchemy import Column, MetaData
 
-from metadata.generated.schema.entity.data.table import Table
+from metadata.generated.schema.entity.data.table import PartitionProfilerConfig, Table
 from metadata.generated.schema.entity.services.connections.database.datalakeConnection import (
     DatalakeConnection,
-    DatalakeType,
 )
 from metadata.generated.schema.entity.services.databaseService import DatabaseConnection
 from metadata.ingestion.ometa.ometa_api import OpenMetadata
-from metadata.orm_profiler.api.models import TablePartitionConfig
 from metadata.orm_profiler.metrics.registry import Metrics
 
 
@@ -45,7 +43,7 @@ class ProfilerInterfaceArgs(BaseModel):
     table_entity: Optional[Union[Table, Any]]
     table_sample_precentage: Optional[Union[float, int]]
     table_sample_query: Optional[Union[int, str]]
-    table_partition_config: Optional[TablePartitionConfig]
+    table_partition_config: Optional[PartitionProfilerConfig]
 
     class Config:
         arbitrary_types_allowed = True
